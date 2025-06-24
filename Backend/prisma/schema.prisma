@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               Int          @id @default(autoincrement())
+  name             String
+  email            String       @unique
+  password         String
+  credit           Int          @default(20)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  userCourse       UserCourse[]
+  createdRooms     StudyRoom[]  @relation(name: "CreatedRooms")
+  requestsSent     Request[]    @relation(name: "RequestsSent")
+  requestsReceived Request[]    @relation(name: "RequestsReceived")
+}
+
+model Course {
+  id         Int          @id @default(autoincrement())
+  name       String       @unique
+  userCourse UserCourse[]
+  StudyRooms StudyRoom[]
+  requests   Request[]
+}
+
+model UserCourse {
+  id        Int    @id @default(autoincrement())
+  user      User   @relation(fields: [user_id], references: [id])
+  user_id   Int
+  course    Course @relation(fields: [course_id], references: [id])
+  course_id Int
+  role      Role
+}
+
+enum Role {
+  Student
+  TA
+}
+
+model StudyRoom {
+  id         Int    @id @default(autoincrement())
+  course     Course @relation(fields: [course_id], references: [id])
+  course_id  Int
+  zoom_link  String
+  creator    User   @relation(name: "CreatedRooms", fields: [creator_id], references: [id])
+  creator_id Int
+}
+
+model Request {
+  id         Int           @id @default(autoincrement())
+  student    User          @relation(name: "RequestsSent", fields: [student_id], references: [id])
+  student_id Int
+  TA         User          @relation(name: "RequestsReceived", fields: [TA_id], references: [id])
+  TA_id      Int
+  course     Course        @relation(fields: [course_id], references: [id])
+  course_id  Int
+  status     RequestStatus
+  zoom_link  String?
+  createdAt  DateTime      @default(now())
+}
+
+enum RequestStatus {
+  Accepted
+  Declined
+}
