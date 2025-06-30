@@ -5,6 +5,9 @@ import * as  connectRedis from "connect-redis";
 import redis from "redis";
 import dotenv from "dotenv";
 import authrouter from "./Routes/auth.js";
+import courseRoutes from "./Routes/courses.js";
+import profileRouter from "./Routes/profile.js";
+
 
 dotenv.config();
 
@@ -39,4 +42,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/auth", authrouter);
+app.use("/courses", courseRoutes);
+app.use("/profile", profileRouter);
+
 app.listen(PORT, () => {});
