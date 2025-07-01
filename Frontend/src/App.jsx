@@ -1,20 +1,24 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
+import { AuthProvider } from "../src/context/authContext";
 import Signup from "./pages/signup";
-import Login from "./pages/login";
+import ProfileSetup from "./pages/profileSetup";
+import "../src/assets/app.css";
 
 function App() {
   return (
-    <Router>
-      <main>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
-      </main>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/profileSetup" element={<ProfileSetup />} />
+          </Routes>
+        </main>
+      </Router>
+    </AuthProvider>
   );
 }
 

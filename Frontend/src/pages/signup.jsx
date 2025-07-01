@@ -1,32 +1,32 @@
 import React, { useState } from "react";
+import { useAuth } from "../context/authContext";
+import { useNavigate } from "react-router-dom";
+import { validateAcademicEmail } from "../utils/validateAcademicEmail";
 import "../assets/form.css";
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const { signup } = useAuth();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-
-    const payload = { name, email, password };
-    try {
-      const response = await fetch("http://localhost:3000/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-      const data = await response.json();
-      if (response.ok) {
-      } else {
-        alert(data.message || "Signup failed");
-      }
-    } catch (error) {
-      throw new Error("Error during signup:", error);
+    const isAcademic = await validateAcademicEmail(email);
+    if (!isAcademic) {
+      alert("Please enter a valid academic email address");
+      return;
+    }
+    const res = await signup(name, email, password);
+    console.log(res);
+    if (res.user) navigate('/profileSetup');
+    else {
+      setError(res.error);
     }
   };
+
   return (
     <div className="form-container">
       <div className="form-header">

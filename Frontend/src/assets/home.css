@@ -87,27 +87,7 @@ p {
   margin: 0 auto;
   text-align: center;
 }
-.hero-title {
-  font-size: 4rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  color: #1e293b;
-}
-.hero-title .gradient-text {
-  background: linear-gradient(135deg, #ec4899, #9333ea);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.hero-subtitle {
-  font-size: 1.5rem;
-  color: #64748b;
-  margin-bottom: 3rem;
-  max-width: 512px;
-  margin-left: auto;
-  margin-right: auto;
-  line-height: 1.6;
-}
+
 .cta-button {
   display: flex;
   justify-content: center;
@@ -152,7 +132,27 @@ p {
   grid-template-columns: repeat(3, 1fr);
   margin-top: 5rem;
 }
-
+.hero-title {
+  font-size: 4rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #1e293b;
+}
+.hero-title .gradient-text {
+  background: linear-gradient(135deg, #ec4899, #9333ea);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero-subtitle {
+  font-size: 1.5rem;
+  color: #64748b;
+  margin-bottom: 3rem;
+  max-width: 512px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
 .feature-card {
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(12px);
