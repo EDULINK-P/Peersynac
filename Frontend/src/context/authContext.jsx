@@ -120,14 +120,38 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const login = async (email, password) => {
+    const res = await fetch("http://localhost:3000/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await res.json();
+    if (data.user) setUser(data.user);
+    return data;
+  };
+
+  const logout = async () => {
+    const res = await fetch("http://localhost:3000/auth/logout", {
+      method: "GET",
+      credentials: "include",
+    });
+    const data = await res.json();
+    if (data.success) setUser(null);
+    return data;
+  };
+
   return (
     <AuthContext.Provider
       value={{
         user,
         signup,
+        login,
         submitprofile,
         getcourse,
         addcourse,
+        logout,
         getdashboardData,
         dashboardCourses,
         courseOptions,
