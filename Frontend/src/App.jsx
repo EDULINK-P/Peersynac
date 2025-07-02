@@ -4,6 +4,8 @@ import Home from "./pages/home";
 import { AuthProvider } from "../src/context/authContext";
 import Signup from "./pages/signup";
 import ProfileSetup from "./pages/profileSetup";
+import Dashboard from "./pages/dashboard";
+import ManageCourses from "./pages/manageCourses";
 import "../src/assets/app.css";
 
 function App() {
@@ -15,6 +17,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/profileSetup" element={<ProfileSetup />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/manage-courses" element={<ManageCourses />} />
           </Routes>
         </main>
       </Router>
