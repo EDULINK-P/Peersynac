@@ -1,29 +1,31 @@
 import React, { useState } from "react";
+import { useAuth } from "../context/authContext";
+import { useNavigate } from "react-router-dom";
 import "../assets/form.css";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
-    const payload = { email, password };
     try {
-      const response = await fetch("http://localhost:3000/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      const data = await response.json();
-      if (response.ok) {
+      const result = await login(email, password);
+      console.log(result);
+      if (result && result.user) {
+        navigate("/dashboard");
       } else {
-        alert(data.message || "Login failed");
+        setError("Invalid email or password");
       }
     } catch (error) {
-      console.error("Error during login:", error);
+      console.log(error);
+      setError("Something went wrong");
     }
   };
+
   return (
     <div className="form-container">
       <div className="form-header">
@@ -51,13 +53,13 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-          />{" "}
+          />
         </div>
         <button type="submit" className="form-button" onClick={handleLogin}>
           Login
         </button>
         <p className="form-link">
-          Don't have an account?{" "}
+          Don't have an account?
           <a className="form-link-a" href="/signup">
             Sign Up
           </a>
