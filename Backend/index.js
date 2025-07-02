@@ -1,18 +1,42 @@
 import express from "express";
 import cors from "cors";
-import authRouter from "./Routes/auth.js";
+import session from "express-session";
+import * as  connectRedis from "connect-redis";
+import redis from "redis";
+import dotenv from "dotenv";
+import authrouter from "./Routes/auth.js";
+
+dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+const RedisStore = connectRedis.RedisStore;
+const redisClient = redis.createClient({url: process.env.REDIS_URL});
+redisClient.connect().catch(console.error);
 
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true,
+ }));
+
 app.use(express.json());
+
+app.use(session({
+    store: new RedisStore({ client: redisClient }),
+    secret: "edulink-session-secret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: false,
+      httpOnly: false,
+      maxAge: 1000 * 60 * 60 * 24,
+    },
+  })
+);
 
 app.get("/", (req, res) => {
   res.send("EduLink is running");
 });
-app.use("/auth",authRouter);
 
-
-app.listen(PORT, () => {
-});
+app.use("/auth", authrouter);
+app.listen(PORT, () => {});
