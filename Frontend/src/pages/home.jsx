@@ -1,6 +1,5 @@
 import React from "react";
 import Header from "../components/header";
-import Footer from "../components/footer";
 import { useNavigate } from "react-router-dom";
 import "../assets/home.css";
 
@@ -17,7 +16,7 @@ const Home = () => {
           </h1>
           <p className="hero-subtitle">
             Join study sessions with TAs, access resources, and build your
-            acdemic network with EduLink's credit-based learning platform.
+            academic network with EduLink's credit-based learning platform.
           </p>
           <div className="cta-button">
             <button
@@ -61,7 +60,6 @@ const Home = () => {
           </section>
         </div>
       </main>
-      <Footer />
     </>
   );
 };
