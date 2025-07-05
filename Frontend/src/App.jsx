@@ -7,6 +7,8 @@ import Login from "./pages/login";
 import ProfileSetup from "./pages/profileSetup";
 import Dashboard from "./pages/dashboard";
 import ManageCourses from "./pages/manageCourses";
+import TaRoom from "./pages/taRoom";
+import StudentRoom from "./pages/StudentRoom";
 import "../src/assets/app.css";
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
             <Route path="/profileSetup" element={<ProfileSetup />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/manage-courses" element={<ManageCourses />} />
+            <Route path="/room/ta/:courseId" element={<TaRoom />} />
+            <Route path="/room/student/:courseId" element={<StudentRoom />} />
           </Routes>
         </main>
       </Router>
